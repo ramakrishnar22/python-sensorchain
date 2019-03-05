@@ -49,7 +49,7 @@ class Blockchain:
     def create_genesis_block(self):
          block=Block( {
             "Year": "0",
-            "Annual-Mini": "0",
+            "Annual-Min": "0",
             "Annual-Max": "0",
             "JAN-FEB Min": "0",
             "JAN-FEB Max": "0",
