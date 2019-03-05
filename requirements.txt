@@ -30,7 +30,6 @@ mccabe==0.6.1
 parsimonious==0.8.1
 pycparser==2.19
 pycryptodome==3.7.3
-pypiwin32==223
 requests==2.21.0
 rlp==1.1.0
 six==1.12.0
