@@ -1,0 +1,4 @@
+graft sensorchain/static
+graft sensorchain/templates
+global-exclude *.pyc
+include sensorchain/data.json

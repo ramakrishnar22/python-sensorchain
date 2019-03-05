@@ -1,0 +1,8 @@
+venv
+build
+dist
+instance
+.git
+.vscode
+TODO
+sensorchain.egg-info

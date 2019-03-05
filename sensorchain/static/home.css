@@ -1,0 +1,37 @@
+#ext{
+    padding:25px;
+}
+table{
+    table-layout: fixed; 
+    word-wrap:break-word;
+  }
+body{
+    font-family: 'Roboto', sans-serif;
+}
+#block{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.bd{
+    width:50%;
+    background-color:white;
+    
+}
+.bsd{
+    display: flex;
+    flex-direction: row;
+    width: 97%;
+    padding: 10px;
+    margin: 10px;
+}
+.bsdf{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content: center;
+}
+.mb{
+    text-align: center
+}
