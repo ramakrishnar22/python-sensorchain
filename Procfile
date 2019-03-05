@@ -1,1 +1,1 @@
-web: gunicorn sensorchain:create_app()
+web: gunicorn "sensorchain:create_app()"

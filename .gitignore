@@ -1,8 +1,8 @@
 venv
-build
-dist
+build/
+dist/
 instance
 .git
 .vscode
 TODO
-sensorchain.egg-info
+*.egg-info
