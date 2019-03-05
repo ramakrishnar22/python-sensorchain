@@ -1,1 +1,1 @@
-web: gunicorn sensorchain:app
+web: gunicorn sensorchain:create_app
