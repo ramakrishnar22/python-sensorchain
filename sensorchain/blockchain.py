@@ -2,9 +2,10 @@ from hashlib import sha256
 import json
 import time
 from urllib.parse import urlparse
-import os
+import os,ast
 from flask import  Blueprint,render_template,request,Response
-
+import base64
+from Crypto.Cipher import AES
 
 class Block:
     def __init__(self,data,prev=0,index=0):
@@ -21,9 +22,6 @@ class Blockchain:
     def __init__(self):
         self.chain=[]
         self.create_genesis_block()
-        self.nodes=set()
-    def register_node(self,add):
-        self.nodes.add(urlparse(add).netloc)
 
     def proof_of_work(self,block):
         block.nonce=0
@@ -48,17 +46,8 @@ class Blockchain:
 
     def create_genesis_block(self):
          block=Block( {
-            "Year": "0",
-            "Annual-Min": "0",
-            "Annual-Max": "0",
-            "JAN-FEB Min": "0",
-            "JAN-FEB Max": "0",
-            "MAR-MAY Min": "0",
-            "MAR-MAY Max": "0",
-            "JUN-SEP Min": "0",
-            "JUN-SEP Max": "0",
-            "OCT-DEC Min": "0",
-            "OCT-DEC Max": "0"
+           "Temperature":"0",
+           "Humidity":"0"
         })
          block.hash=self.compute_hash(block.data,block.prevhash,block.nonce)
          self.chain.append(block)
@@ -84,8 +73,6 @@ class Blockchain:
         c=[]
         for ddata in reversed(dval):
             c.append(ddata.__dict__)
-        with open(os.path.join(os.path.dirname(__file__), 'response.json'),'w') as f:
-            json.dump(c,f)
         return json.dumps(c,separators=(',',':'))
     def mine(self,obj):
         no=int(obj['index'])
@@ -125,17 +112,6 @@ class Blockchain:
 cd=[]
 bd=Blueprint('blockdata',__name__)
 bb=Blockchain()
-bb.register_node("http://127.0.0.1:6000")
-# Dataset from the respective json file
-with open(os.path.join(os.path.dirname(__file__), 'data.json')) as f:
-    datum=json.load(f)
-fields=["Year","Annual-Min","Annual-Max","JAN-FEB Min","JAN-FEB Max","MAR-MAY Min","MAR-MAY Max","JUN-SEP Min","JUN-SEP Max","OCT-DEC Min","OCT-DEC Max"]
-for val in datum["data"]:
-    d={}
-    for ind,value in enumerate(val):
-        d[fields[ind]]=value
-    bb.add_new_block(Block(d))
-#End of dataset retrieval
 
 # Create routes for the backend
 @bd.route("/")
@@ -163,11 +139,38 @@ def valid(i):
 # Dynamic adding of data from the script to the server
 @bd.route("/add",methods=['POST'])
 def addb():
-    print("Received from client->{}".format(request.data))
-    q=request.data.decode('utf-8')
-    cd.append(q)
-    bb.add_new_block(Block(q))
+    print("Received from client->{}".format(request.is_json))
+    hexa=['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
+    key="mypasswordisramsmypasswordisrams"
+    print(request.get_data(as_text=True))
+    w = request.get_data(as_text=True)
+    di=ast.literal_eval(w)
+    gdec,giv=di['data'],di['iv']
+    b64dec=base64.b64decode(gdec)
+    print(b64dec)
+    aes1=AES.new(key.encode('utf-8'),AES.MODE_CBC,giv.encode('utf-8'))
+    d=aes1.decrypt(b64dec)
+    f=d.decode('utf-8')
+    print(f)
+    trail=f[-1]
+    v=0
+    for ind,k in enumerate(hexa):
+        if k == trail:
+            v=ind
+            break
+    print(v)
+    f=f[:-v]
+    print(f)
+    dis=ast.literal_eval(f)
+    print(dis)
+    cd.append(dis)
     return Response("Received successfully")
+    # sw=bb.add_new_block(Block(q))
+    # if sw == True:
+    #     return Response("Received successfully")
+    # else:
+    #     return Response("Cannot added to the block")
+
 # Shows the dynamically added data
 @bd.route("/dd")
 def dexceptdata():

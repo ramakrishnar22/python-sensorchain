@@ -6,3 +6,4 @@ instance
 .vscode
 TODO
 *.egg-info
+sensorchain/__pycache__/*
