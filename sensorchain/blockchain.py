@@ -142,34 +142,26 @@ def addb():
     print("Received from client->{}".format(request.is_json))
     hexa=['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
     key="mypasswordisramsmypasswordisrams"
-    print(request.get_data(as_text=True))
     w = request.get_data(as_text=True)
     fi=ast.literal_eval(w)
     gdec,giv=fi['data'],fi['iv']
     b64dec=base64.b64decode(gdec)
-    print(b64dec)
     aes1=AES.new(key.encode('utf-8'),AES.MODE_CBC,giv.encode('utf-8'))
     d=aes1.decrypt(b64dec)
     f=d.decode('utf-8')
-    print(f)
     trail=f[-1]
     v=0
     for ind,k in enumerate(hexa):
         if k == trail:
             v=ind
             break
-    print(v)
     f=f[:-v]
-    print(f)
     dis=ast.literal_eval(f)
-    print(dis)
-    cd.append(dis)
-    return Response("Received successfully")
-    # sw=bb.add_new_block(Block(q))
-    # if sw == True:
-    #     return Response("Received successfully")
-    # else:
-    #     return Response("Cannot added to the block")
+    sw=bb.add_new_block(Block(dis))
+    if sw == True:
+        return Response("Received successfully")
+    else:
+        return Response("Cannot added to the block")
 
 # Shows the dynamically added data
 @bd.route("/dd")
