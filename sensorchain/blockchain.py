@@ -144,7 +144,8 @@ def addb():
     key="mypasswordisramsmypasswordisrams"
     print(request.get_data(as_text=True))
     w = request.get_data(as_text=True)
-    gdec,giv=w['data'],w['iv']
+    fi=ast.literal_eval(w)
+    gdec,giv=fi['data'],fi['iv']
     b64dec=base64.b64decode(gdec)
     print(b64dec)
     aes1=AES.new(key.encode('utf-8'),AES.MODE_CBC,giv.encode('utf-8'))
