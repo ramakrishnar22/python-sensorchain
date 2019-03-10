@@ -1,16 +1,15 @@
 from hashlib import sha256
 import json
 import time
-from urllib.parse import urlparse
 import os,ast
 from flask import  Blueprint,render_template,request,Response
 import base64
 from Crypto.Cipher import AES
 
 class Block:
-    def __init__(self,data,prev=0,index=0):
+    def __init__(self,data,t=time.time(),prev=0,index=0):
         self.index=index
-        self.timestamp=time.ctime(time.time())
+        self.timestamp=time.ctime(t)
         self.data=data
         self.prevhash=prev
         self.nonce=0
@@ -157,7 +156,8 @@ def addb():
             break
     f=f[:-v]
     dis=ast.literal_eval(f)
-    sw=bb.add_new_block(Block(dis))
+    sw=bb.add_new_block(Block(dis,time.time()))
+    print(bb.chain[-1].timestamp)
     if sw == True:
         return Response("Received successfully")
     else:
