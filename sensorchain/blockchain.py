@@ -2,7 +2,7 @@ from hashlib import sha256
 import json
 import time
 import os,ast
-from flask import  Blueprint,render_template,request,Response
+from flask import  Blueprint,render_template,request,Response,jsonify
 import base64
 from Crypto.Cipher import AES
 
@@ -138,7 +138,6 @@ def valid(i):
 # Dynamic adding of data from the script to the server
 @bd.route("/add",methods=['POST'])
 def addb():
-    print("Received from client->{}".format(request.is_json))
     hexa=['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
     key="mypasswordisramsmypasswordisrams"
     w = request.get_data(as_text=True)
@@ -158,8 +157,8 @@ def addb():
     dis=ast.literal_eval(f)
     sw=bb.add_new_block(Block(dis,time.time()))
     print(bb.chain[-1].timestamp)
-    if sw == True:
-        return Response("Received successfully")
+    if sw :
+        return jsonify(bb.chain[-1].__dict__),200
     else:
         return Response("Cannot added to the block")
 

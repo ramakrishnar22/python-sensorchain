@@ -34,31 +34,31 @@
                                   <div class="jumbotron" style="padding: 24px">
                                <form name="blockd" class="form-horizontal" id="frm{{@index}}" onsubmit="displayminedata('frm{{@index}}')">
                                    <div class="bsdf">
-                                     <div class="form-group">
+                                     <div class="form-group" title='Index:{{index}}'>
                                        <label  class=" col-sm-2" for="ind-{{@index}}">Index</label>
                                        <div class="col-sm-10">
                                        <input type="text" readonly value="{{index}}" name="index" class="form-control" id="ind-{{@index}}"/>
                                     </div>
                                    </div>
-                                   <div class="form-group">
+                                   <div class="form-group" title='Timestamp: {{timestamp}}'>
                                         <label  class=" col-sm-2" for="time-{{@index}}">Timestamp</label>
                                         <div class="col-sm-10">
                                         <input type="text" readonly value="{{timestamp}}" name="timestamp" class="form-control" id="time-{{@index}}"/>
                                      </div>
                                     </div>
-                                   <div class="form-group">
+                                   <div class="form-group" title='Hash : {{hash}}'>
                                         <label class=" col-sm-2" for="hash-{{@index}}">Hash</label>
                                          <div class="col-sm-10">
                                         <input type="text" readonly value="{{hash}}" name="hash"class="form-control" id="hash-{{@index}}"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" title='Prev-hash : {{prevhash}}'>
                                             <label class=" coll-sm-8" for="prevhash-{{@index}}">Previous Hash</label>
                                              <div class="col-sm-10">
                                              <input type="text"  readonly value="{{prevhash}}" name="prevhash" class="form-control" id="prevhash-{{@index}}"/>
                                           </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" title='Nonce : {{nonce}}'>
                                                 <label class=" col-sm-2" for="nonce-{{@index}}">Nonce</label>
                                                  <div class="col-sm-10">
                                                  <input type="text" readonly value="{{nonce}}" name="nonce" class="form-control" id="nonce-{{@index}}"/>
