@@ -158,7 +158,9 @@ def addb():
     sw=bb.add_new_block(Block(dis,time.time()))
     print(bb.chain[-1].timestamp)
     if sw :
-        return jsonify(bb.chain[-1].__dict__),200
+        r={}
+        r["description"]="Successfully added to the block"
+        return jsonify(r),200
     else:
         return Response("Cannot added to the block")
 
